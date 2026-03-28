@@ -8,10 +8,23 @@ $res=$obj->generar();
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+<h2>Acrónimo</h2>
+
 <form method="POST">
-<input name="frase" placeholder="Ingrese frase">
+<input name="frase">
 <button>Generar</button>
 </form>
 
-<h2><?= $res ?></h2>
-<a href="../index.php">⬅ Volver</a>
+<div class="result"><?= $res ?></div>
+
+<a class="volver" href="../index.php">Volver</a>
+
+</body>
+</html>

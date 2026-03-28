@@ -1,18 +1,23 @@
 <?php
-abstract class Calc{
-    abstract public function operar($a,$b);
+abstract class Operacion{
+    abstract public function calcular($a,$b);
 }
 
-class Suma extends Calc{
-    public function operar($a,$b){return $a+$b;}
+class Suma extends Operacion{
+    public function calcular($a,$b){ return $a+$b; }
 }
-class Resta extends Calc{
-    public function operar($a,$b){return $a-$b;}
+
+class Resta extends Operacion{
+    public function calcular($a,$b){ return $a-$b; }
 }
-class Multiplicacion extends Calc{
-    public function operar($a,$b){return $a*$b;}
+
+class Multiplicacion extends Operacion{
+    public function calcular($a,$b){ return $a*$b; }
 }
-class Division extends Calc{
-    public function operar($a,$b){return $b!=0?$a/$b:"Error";}
+
+class Division extends Operacion{
+    public function calcular($a,$b){
+        return $b!=0?$a/$b:"Error";
+    }
 }
 ?>

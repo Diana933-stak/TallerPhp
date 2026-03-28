@@ -1,25 +1,29 @@
 <?php
-abstract class Operacion{
-    abstract public function calcular($n);
-}
+class Matematicas{
 
-class Fibonacci extends Operacion{
-    public function calcular($n){
-        $serie=[0,1];
-        for($i=2;$i<$n;$i++){
-            $serie[$i]=$serie[$i-1]+$serie[$i-2];
+    public function fibonacci($n){
+        $a=0; $b=1;
+        $serie=[];
+
+        for($i=0;$i<$n;$i++){
+            $serie[]=$a;
+            $temp=$a+$b;
+            $a=$b;
+            $b=$temp;
         }
-        return $serie;
+
+        return implode(" → ", $serie);
     }
-}
+    public function factorial($n){
+        $resultado = 1;
+        $pasos = [];
 
-class Factorial extends Operacion{
-    public function calcular($n){
-        $res=1;
         for($i=1;$i<=$n;$i++){
-            $res*=$i;
+            $resultado *= $i;
+            $pasos[] = $i;
         }
-        return $res;
+
+        return implode(" × ", $pasos) . " = " . $resultado;
     }
 }
 ?>

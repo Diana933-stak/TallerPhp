@@ -7,14 +7,12 @@ class Acronym{
     }
 
     public function generar(){
-        $limpio=preg_replace("/[^a-zA-Z -]/","",$this->frase);
-        $palabras=preg_split("/[\s-]+/",$limpio);
-
-        $acro="";
+        $palabras=preg_split("/[\s-]+/",$this->frase);
+        $res="";
         foreach($palabras as $p){
-            $acro.=strtoupper($p[0]);
+            if($p!="") $res.=strtoupper($p[0]);
         }
-        return $acro;
+        return $res;
     }
 }
 ?>

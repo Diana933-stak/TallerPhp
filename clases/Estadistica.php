@@ -3,24 +3,44 @@ class Estadistica{
     private $nums;
 
     public function __construct($nums){
-        $this->nums=$nums;
+        $this->nums = array_map('trim', $nums);
     }
 
     public function promedio(){
-        return array_sum($this->nums)/count($this->nums);
+        $nums = array_map('floatval', $this->nums);
+        return array_sum($nums) / count($nums);
     }
 
     public function media(){
-        sort($this->nums);
-        $n=count($this->nums);
-        return ($n%2==0)?
-        ($this->nums[$n/2]+$this->nums[$n/2-1])/2:
-        $this->nums[floor($n/2)];
+        $nums = array_map('floatval', $this->nums);
+        sort($nums);
+        $n = count($nums);
+
+        if($n % 2 == 0){
+            return ($nums[$n/2 - 1] + $nums[$n/2]) / 2;
+        } else {
+            return $nums[floor($n/2)];
+        }
     }
 
     public function moda(){
-        $val=array_count_values($this->nums);
-        return array_keys($val,max($val));
+        $enteros = array_map('intval', $this->nums);
+        $conteo = array_count_values($enteros);
+
+        if(empty($conteo)){
+            return ["Sin datos"];
+        }
+
+        $max = max($conteo);
+
+        $modas = [];
+        foreach($conteo as $num => $freq){
+            if($freq == $max){
+                $modas[] = $num;
+            }
+        }
+
+        return $modas;
     }
 }
 ?>

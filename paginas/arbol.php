@@ -1,25 +1,44 @@
 <?php
-require_once "../clases/ArbolBinario.php";
+require_once "../clases/Arbol.php";
 
-$res="";
+$res = "";
 
 if($_POST){
-$pre=explode(",",$_POST['pre']);
-$in=explode(",",$_POST['in']);
 
-$arbol=new ArbolBinario();
-$raiz=$arbol->construir($pre,$in);
-$post=$arbol->postorden($raiz);
+    $pre = preg_split('/\s*,\s*/', strtoupper($_POST['pre']));
+    $in  = preg_split('/\s*,\s*/', strtoupper($_POST['in']));
 
-$res=implode(" → ",$post);
+    $obj = new Arbol();
+    $raiz = $obj->construir($pre, $in);
+
+    if($raiz){
+        $res = $obj->imprimirBonito($raiz);
+    } else {
+        $res = "Error en los datos";
+    }
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+<h2>Árbol Binario</h2>
+
 <form method="POST">
-<input name="pre" placeholder="A,B,D,E,C">
-<input name="in" placeholder="D,B,E,A,C">
-<button>Construir</button>
+<input name="pre" placeholder="A,B,D,E,C" required>
+<input name="in" placeholder="D,B,E,A,C" required>
+<button>Generar</button>
 </form>
 
-<h2><?= $res ?></h2>
-<a href="../index.php">⬅ Volver</a>
+<div class="result">
+<?= $res ?>
+</div>
+
+<a class="volver" href="../index.php">Volver</a>
+
+</body>
+</html>

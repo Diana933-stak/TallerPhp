@@ -1,28 +1,47 @@
-$_SESSION['historial'][]="$a $op $b = $res";
+<?php
+require_once "../clases/Calculadora.php";
+$res="";
+
+if($_POST){
+$a=$_POST['a'];
+$b=$_POST['b'];
+$op=$_POST['op'];
+
+switch($op){
+case "+": $obj=new Suma(); break;
+case "-": $obj=new Resta(); break;
+case "*": $obj=new Multiplicacion(); break;
+case "/": $obj=new Division(); break;
 }
 
-if(isset($_POST['borrar'])) $_SESSION['historial']=[];
+$res=$obj->calcular($a,$b);
+}
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+<h2>Calculadora</h2>
 
 <form method="POST">
 <input name="a">
 <input name="b">
 <select name="op">
-<option value="suma">+</option>
-<option value="resta">-</option>
-<option value="multi">*</option>
-<option value="div">/</option>
+<option>+</option>
+<option>-</option>
+<option>*</option>
+<option>/</option>
 </select>
 <button>Calcular</button>
 </form>
 
-<h2><?= $res ?></h2>
+<div class="result"><?= $res ?></div>
 
-<h3>Historial</h3>
-<?php foreach($_SESSION['historial'] as $h) echo $h."<br>"; ?>
+<a class="volver" href="../index.php">Volver</a>
 
-<form method="POST">
-<button name="borrar">Borrar historial</button>
-</form>
-
-<a href="../index.php">⬅ Volver</a>
+</body>
+</html>
