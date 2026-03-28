@@ -12,7 +12,7 @@ if($_POST){
     $raiz = $obj->construir($pre, $in);
 
     if($raiz){
-        $res = $obj->imprimirBonito($raiz);
+        $res = $obj->imprimir($raiz);
     } else {
         $res = "Error en los datos";
     }
@@ -22,6 +22,8 @@ if($_POST){
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Árbol Binario</title>
 <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
@@ -31,7 +33,7 @@ if($_POST){
 <form method="POST">
 <input name="pre" placeholder="A,B,D,E,C" required>
 <input name="in" placeholder="D,B,E,A,C" required>
-<button>Generar</button>
+<button type="submit">Generar</button>
 </form>
 
 <div class="result">

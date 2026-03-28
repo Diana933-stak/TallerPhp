@@ -14,12 +14,14 @@ class Nodo {
 class Arbol {
 
     public function construir($pre, $in){
-        if(empty($pre)) return null;
+        if(count($pre) == 0) return null;
 
-        $raiz = $pre[0];
-        $nodo = new Nodo($raiz);
+        $raizValor = $pre[0];
+        $nodo = new Nodo($raizValor);
 
-        $pos = array_search($raiz, $in);
+        $pos = array_search($raizValor, $in);
+
+        if($pos === false) return null;
 
         $inIzq = array_slice($in, 0, $pos);
         $inDer = array_slice($in, $pos + 1);
@@ -33,74 +35,23 @@ class Arbol {
         return $nodo;
     }
 
-    public function altura($nodo){
-        if($nodo == null) return 0;
-        return 1 + max($this->altura($nodo->izq), $this->altura($nodo->der));
-    }
+    public function imprimir($raiz){
 
-    public function imprimirBonito($raiz){
-        $h = $this->altura($raiz);
-        $espacio = pow(2, $h);
+        if(!$raiz) return "Error en los datos";
 
-        $res = "<pre style='text-align:center; font-size:18px;'>";
+        $A = $raiz->valor;
+        $B = $raiz->izq ? $raiz->izq->valor : " ";
+        $C = $raiz->der ? $raiz->der->valor : " ";
+        $D = ($raiz->izq && $raiz->izq->izq) ? $raiz->izq->izq->valor : " ";
+        $E = ($raiz->izq && $raiz->izq->der) ? $raiz->izq->der->valor : " ";
 
-        for($nivel=1; $nivel <= $h; $nivel++){
-
-            $nodes = $this->getNivel($raiz, $nivel);
-
-            $gap = str_repeat(" ", intval($espacio / pow(2, $nivel)));
-
-            $linea = $gap;
-
-            foreach($nodes as $n){
-                $linea .= ($n ? $n : " ") . $gap . $gap;
-            }
-
-            $res .= $linea . "\n";
-
-            if($nivel < $h){
-                $res .= $this->lineas($nodes, $espacio, $nivel);
-            }
-        }
-
-        $res .= "</pre>";
-
-        return $res;
-    }
-
-    private function getNivel($nodo, $nivel){
-        if($nivel == 1){
-            return [$nodo ? $nodo->valor : null];
-        }
-
-        if($nodo == null){
-            return array_merge(
-                $this->getNivel(null, $nivel-1),
-                $this->getNivel(null, $nivel-1)
-            );
-        }
-
-        return array_merge(
-            $this->getNivel($nodo->izq, $nivel-1),
-            $this->getNivel($nodo->der, $nivel-1)
-        );
-    }
-
-    private function lineas($nodes, $espacio, $nivel){
-        $res = "";
-        $gap = intval($espacio / pow(2, $nivel+1));
-
-        $line = str_repeat(" ", $gap);
-
-        foreach($nodes as $n){
-            if($n){
-                $line .= "/" . str_repeat(" ", $gap*2) . "\\";
-            } else {
-                $line .= str_repeat(" ", $gap*2 + 2);
-            }
-        }
-
-        return $line . "\n";
+        return "<pre style='text-align:center; font-size:18px;'>
+        $A
+      /   \\
+     $B     $C
+    / \\
+   $D   $E
+</pre>";
     }
 }
 ?>
